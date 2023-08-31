@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"github.com/devfullcycle/20-CleanArch/internal/entity"
-	"github.com/devfullcycle/20-CleanArch/pkg/events"
+	"github.com/patyumi/api-orders/internal/entity"
+	"github.com/patyumi/api-orders/pkg/events"
 )
 
 type OrderInputDTO struct {
