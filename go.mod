@@ -1,4 +1,4 @@
-module github.com/devfullcycle/20-CleanArch
+module github.com/patyumi/api-orders
 
 go 1.19
 
