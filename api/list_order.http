@@ -1,0 +1,9 @@
+GET http://localhost:8000/order HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+
+{
+    "page": 0,
+    "limit": 0,
+    "sort": "asc"
+}

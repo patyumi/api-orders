@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/patyumi/api-orders/internal/entity"
 )
@@ -33,4 +34,37 @@ func (r *OrderRepository) GetTotal() (int, error) {
 		return 0, err
 	}
 	return total, nil
+}
+
+func (r *OrderRepository) FindAll(page, limit int, sort string) ([]entity.Order, error) {
+	var orders []entity.Order
+	var query string
+	var err error
+
+	if sort != "" && sort != "asc" && sort != "desc" {
+		sort = "asc"
+	}
+	if page != 0 && limit != 0 {
+		query = fmt.Sprintf("Select id, price, tax, final_price from orders order by id %s limit %d,%d", sort, page-1, limit)
+	} else {
+		query = fmt.Sprintf("Select id, price, tax, final_price from orders order by id %s", sort)
+	}
+
+	rows, err := r.Db.Query(query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var o entity.Order
+		err = rows.Scan(&o.ID, &o.Price, &o.Tax, &o.FinalPrice)
+		if err != nil {
+			return nil, err
+		}
+
+		orders = append(orders, o)
+	}
+
+	return orders, err
 }
